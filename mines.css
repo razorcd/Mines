@@ -1,0 +1,55 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	text-align: center;
+		
+}
+
+#block {
+	list-style: none;
+	margin: 0px auto;
+	padding: 0px;
+	text-align:left;
+	width: 264px;
+	border:solid 2px black;
+}
+
+#block > li{
+	margin: 0px;
+	padding: 0px;
+	display: block;
+	font-size:0px;
+}
+
+.box {
+	display:inline-block;
+	background-color: darkgrey;
+	height: 20px;
+	width: 30px;
+	padding: 10px 5px;
+	font-size:medium;
+	text-align:center;
+	border: solid 2px black;
+}
+
+.box:hover {
+	border: solid 2px lightgrey;
+}
+
+a[name="bomb"] {
+	background-color:red;
+	color:pink;
+	font-weight: bold;
+}
+
+a[name="0"] {
+	background-color:white;
+}
+a[name="1"] {
+	background-color:red;
+	color:pink;
+	font-weight: bold;
+}
