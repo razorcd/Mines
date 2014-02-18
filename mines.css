@@ -1,6 +1,7 @@
 * {
 	margin: 0px;
 	padding: 0px;
+
 }
 
 body {
@@ -47,9 +48,14 @@ a[name="bomb"] {
 
 a[name="0"] {
 	background-color:white;
+	color:black;
 }
 a[name="1"] {
-	background-color:red;
-	color:pink;
+	background-color:lightgrey;
+	color:black;
 	font-weight: bold;
+}
+
+a[checked="1"] {
+	background-color:pink;
 }
