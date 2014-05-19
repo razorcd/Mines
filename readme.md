@@ -1,5 +1,5 @@
-# Mines 
+  # Mines 
 
-Just Vanilla Javascript (no frameworks)
+  Just Vanilla Javascript (no frameworks)
 
 ![ScreenShot](minesScreenshot.jpg)
