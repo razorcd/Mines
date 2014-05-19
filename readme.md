@@ -1,3 +1,3 @@
-# Mines
+# Mines 
 
 ![ScreenShot](minesScreenshot.jpg)

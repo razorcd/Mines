@@ -105,9 +105,10 @@ a[name="4"] {
 	background-color:#3a8500;
 }
 
-a[name="5"] {
+a[name="5"], a[name="6"], a[name="7"], a[name="8"],
+a[name="9"], a[name="10"], a[name="11"], a[name="12"] {
     box-shadow: 1px 1px 3px #525252;
-	background-color:#70ff00;
+	background-color:#368000;
 }
 
 #footer {

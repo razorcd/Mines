@@ -1,5 +1,6 @@
 
-var NewBox = function(x,y,boxType){
+//Object for every BOX
+var NewBox = function(x,y){
 	return {
 		x: x,
 		y: y,
@@ -10,7 +11,7 @@ var NewBox = function(x,y,boxType){
 		template: (function(){
 			var a = document.createElement("a");
 			a.className = "box";
-			a.setAttribute("href"," ");
+			a.setAttribute("href","#");
 			a.id = x + ":" + y;
 			return a;
 		}()),
@@ -36,9 +37,8 @@ var _maxSize = 12;
 var _defaultSize = 6;
 
 
-
+//Mines constructor
 var Mines = function(elementId, width, height, nrOfMines){
-
 
 	this.elementId = elementId;
 	this.templateBlock = document.createElement("ul");
@@ -49,11 +49,24 @@ var Mines = function(elementId, width, height, nrOfMines){
 	if ((typeof width === "number") && (width >=3) && (width < _maxSize)) this.boxWidth = Math.floor(width);
 	else if (!this.boxWidth) this.boxWidth = _defaultSize;
 	if ((typeof height === "number") && (height >=3) && (height < _maxSize)) this.boxHeight = Math.floor(height);
-	
+	else if (!this.boxHeight) this.boxHeight = _defaultSize;
+
 	this.maze = [];
 	this.nrOfMines = nrOfMines;
 }
 
+//reseting properties and generating a new game
+Mines.prototype.startNewGame = function(width,height, nrOfMines){
+	removeClickEvent(document.getElementById("minesid"), listener);
+	this.maze=[];
+	this.nrOfMines = nrOfMines;
+	this.setMazeSize(width,height);
+	this.generateMaze();
+	this.drawMaze();
+	clickEvent(document.getElementById("minesid"), listener);
+}
+
+//adding NewBox() to every element, generating bombs and calculating every box values.
 Mines.prototype.generateMaze = function(){
 	var i,j,bombPositionGood,t;
 
@@ -61,19 +74,20 @@ Mines.prototype.generateMaze = function(){
 	for (i=0;i<this.boxWidth;i++){
 		this.maze[i]=[];
 		for(j=0;j<this.boxHeight;j++){
-			this.maze[i][j]= NewBox(i,j,"Clean");
+			this.maze[i][j]= NewBox(i,j);
 		}
 	}
 
-
-	var bombs = generateBomgsArray(this.boxWidth, this.boxHeight, this.nrOfMines);
+	//set the bombs in the maze
+	var bombs = _generateBomgsArray(this.boxWidth, this.boxHeight, this.nrOfMines);
 	for(t=0;t<bombs.length;t++){
 		this.maze[bombs[t].x][bombs[t].y].setBomb(true);
 	}
+	//calculate values (value = number of bombs around every box)
 	this._calculateValues();
-	
 }
 
+//calculates values for every box (value=number of bombs around every box)
 Mines.prototype._calculateValues = function(){
 	var i,j, ii,jj;
 	for (i = 0; i < this.maze.length; i++) {
@@ -98,11 +112,17 @@ Mines.prototype._calculateValues = function(){
 			};
 		}
 	};
+
+	//clear values on bomb boxes
+	for (i = 0; i < this.maze.length; i++) 
+		for (j = 0; j < this.maze[i].length; j++) {
+			if (this.maze[i][j].bomb) this.maze[i][j].value=-1;
+		}
 }
 
 
 //generating unique bombs positions array
-function generateBomgsArray(x,y,nrOfMines){
+function _generateBomgsArray(x,y,nrOfMines){
 	
 	var bombs = [];
 	for (i=0;i<nrOfMines;i++){
@@ -123,33 +143,29 @@ function generateBomgsArray(x,y,nrOfMines){
 	return bombs;
 }
 
-
+//sets the maze width and height properties
 Mines.prototype.setMazeSize = function(width, height){
-	if ((typeof height !== "number") ||
-		(typeof width !== "number") ||
-		(height < 3) || (height > _maxSize) ||
-		(width < 3) || (width > _maxSize)
-	 ) return false;
-
-	this.boxHeight = height;
-	this.boxWidth = width;
+	//seting the size
+	if ((typeof width === "number") && (width >=3) && (width < _maxSize)) this.boxWidth = Math.floor(width);
+	else if (!this.boxWidth) this.boxWidth = _defaultSize;
+	if ((typeof height === "number") && (height >=3) && (height < _maxSize)) this.boxHeight = Math.floor(height);
+	else if (!this.boxHeight) this.boxHeight = _defaultSize;
 
 	return true;
 }
 
+//draws the maze on the DOM
 Mines.prototype.drawMaze = function(){
 	var div = document.getElementById(this.elementId);
 	div.innerHTML = "";
 	
 	//ul.appendChild(document.createElement("li"));
-	
-
 	for (j=0;j<this.maze[0].length;j++){
 		var ul = document.createElement("ul");
 		ul.className = "block";
 		var li = document.createElement("li");
 		for (i=0;i<this.maze.length;i++){
-				
+			this.maze[i][j].template.innerHTML=this.maze[i][j].value;   //add value on innerHTML
 			li.appendChild(this.maze[i][j].template);
 		}
 		//var tempUl = ul;
@@ -157,5 +173,74 @@ Mines.prototype.drawMaze = function(){
 		ul.appendChild(li);
 		div.appendChild(ul);
 	}
+}
 
+//used on click event, function actives a box
+Mines.prototype.serActiveBox = function(id,e){
+	var x,y;
+	x=Math.floor(id.split(":")[0]);
+	y=Math.floor(id.split(":")[1]);
+	//console.log(x,y);
+	if(this.maze[x][y].active === false && this.maze[x][y].bomb === true) {
+		// console.log ("GAME OVER !!!");
+		removeClickEvent(document.getElementById("minesid"), listener);
+		this.drawAllBombs();
+	}
+	else this._activateField(x,y)
+}
+
+//recursive func to activate a field of "clean" boxes 
+Mines.prototype._activateField = function(x,y){
+	x=Math.floor(x); y=Math.floor(y);
+	// console.log("checking: " + x +" x " + y);
+	if (this.maze[x][y].active === false && this.maze[x][y].bomb === false){		
+			this.maze[x][y].active =true;
+			this.maze[x][y].template.setAttribute("name",this.maze[x][y].value);
+			if (y>0) this._activateField(x  ,y-1);
+			if (y<this.maze[0].length-1) {this._activateField(x  ,y+1); /*console.log(this.maze[0].length-1)*/}
+			if (x>0) this._activateField(x-1,y  );
+			if (x<this.maze.length-1) this._activateField(x+1,y  );
+	}
+}
+
+//draw all bombs on DOM
+Mines.prototype.drawAllBombs = function(){
+	var i,j;
+	for (i = 0; i < this.maze.length; i++) 
+		for (j = 0; j < this.maze[i].length; j++) {
+			if (this.maze[i][j].bomb) this.maze[i][j].template.setAttribute("name","bomb");
+		}
+}
+
+
+//NEW GAME EVENTS
+clickEvent(document.getElementById("reset"),  function(){
+	mine1.startNewGame(Math.floor(document.getElementById("sizeX").value),
+					   Math.floor(document.getElementById("sizeY").value),
+					   Math.floor(document.getElementById("maxBombs").value));
+})
+
+var listener = function(e){
+	e.preventDefault();
+	if (e.target.id && e.target.className==="box") mine1.serActiveBox(e.target.id,e);
+};
+clickEvent(document.getElementById("minesid"), listener);
+
+//click event ie8 compatible
+function clickEvent(el, func){
+	if (el.addEventListener) {
+		el.addEventListener("click",func,false);
+	}
+	else {
+		el.attachEvent("onclick", func);
+	}
+}
+
+function removeClickEvent(el, listener){
+	if (el.removeEventListener) {
+		el.removeEventListener("click", listener, false);
+	}
+	else {
+		el.detachEvent ("onclick", listener);
+	}
 }
