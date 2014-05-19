@@ -1,4 +1,4 @@
-  # Mines 
+#    Mines 
 
   Just Vanilla Javascript (no frameworks)
 
