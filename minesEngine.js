@@ -1,4 +1,4 @@
-(function(){
+function M(mid){
 
 	var _maxSize = 15;
 	var _defaultSize = 6;
@@ -18,6 +18,7 @@
 				a.className = "box";
 				a.setAttribute("href","#");
 				a.id = x + ":" + y;
+				a.innerHTML = "&nbsp";
 				return a;
 			}()),
 
@@ -64,7 +65,11 @@
 		removeClickEvent(document.getElementById("minesid"), listener);
 		this.gameOverEl.innerHTML = "";
 		this.maze=[];
-		this.nrOfMines = nrOfMines;
+
+		width = validate(width, 3, _maxSize);
+		height = validate(height, 3, _maxSize);
+		this.nrOfMines = validate(nrOfMines, 3, width*height/1.5);
+
 		this.setMazeSize(width,height);
 		this.generateMaze();
 		this.drawMaze();
@@ -125,6 +130,12 @@
 			}
 	}
 
+	function validate(val, min, max){
+		if (isNaN(val)) val =_defaultSize;
+		if(val<min) return min;
+		if(val>max) return max;
+		return val;
+	}
 
 	//generating unique bombs positions array
 	function _generateBomgsArray(x,y,nrOfMines){
@@ -174,7 +185,7 @@
 			ul.className = "block";
 			var li = document.createElement("li");
 			for (i=0;i<this.maze.length;i++){
-				this.maze[i][j].template.innerHTML=this.maze[i][j].value;   //add value on innerHTML
+				//this.maze[i][j].template.innerHTML=this.maze[i][j].value;   //add value on innerHTML
 				li.appendChild(this.maze[i][j].template);
 			}
 
@@ -224,6 +235,7 @@
 		// console.log("checking: " + x +" x " + y);
 		if (this.maze[x][y].active === false && this.maze[x][y].bomb === false){		
 				this.maze[x][y].active =true;
+				if (this.maze[x][y].value > 0 )this.maze[x][y].template.innerHTML=this.maze[x][y].value;   //add value on innerHTML
 				//this.maze[x][y].template.setAttribute("name",this.maze[x][y].value);
 				this.maze[x][y].template.className = "box " + "v" + this.maze[x][y].value;
 				if (y>0) this._activateField(x  ,y-1);
@@ -293,11 +305,14 @@
 	};
 
 
-
 	//starting game
-	var mine2 = new Mines("minesid");
-	mine2.startNewGame(6,6,3);
+	var mine2 = new Mines(mid);
+	mine2.startNewGame(6,6,12);
+
+	//start testing functions
+	//testing(mine2,NewBox);
+
+};
 
 
-
-}());
+M("minesid");

@@ -1,15 +1,10 @@
-* {
-	margin: 0px;
-	padding: 0px;
-    font-family: sans-serif;
-}
 
-#form>* {
+#maindiv #form  p {
     display:inline-block;
     margin: 10px;
 }
 
-h1 {
+#maindiv h1 {
     margin-top:20px;
     text-shadow:3px 3px 10px #b7b7b7;
 }
@@ -18,7 +13,7 @@ body {
     text-align: center;
 }
 
-#head {
+#maindiv #head {
     width: 704px;
     margin: 0 auto;
     text-align:center;
@@ -30,7 +25,7 @@ body {
     text-align:center;
 }
 
-.block {
+#maindiv .block {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -38,7 +33,7 @@ body {
 	border:solid 2px white;
 }
 
-.block > li{
+#maindiv .block > li{
 	margin: 0 auto;
 	padding: 0px;
 	display: block;
@@ -46,7 +41,8 @@ body {
     width: 704px;
 }
 
-.box {
+#maindiv .box {
+    text-decoration: none;
 	display:inline-block;
 	background-color: #3783e0;
 	height: 20px;
@@ -68,65 +64,67 @@ body {
     box-shadow: 3px 3px 5px #808080;   
 }
 
-.box:hover {
+#maindiv .box:hover {
     background-color: #87b0e4;
 }
 
-a.bomb {
+#maindiv a.bomb {
     box-shadow: 1px 1px 3px #525252;
 	background-color:red;
 	color:pink;
 	font-weight: bold;
 }
 
-a.v0 {
+#maindiv a.v0 {
     box-shadow: 1px 1px 3px #525252;
 	background-color: #70ff00;
 	color:black;
 }
 
-a.v1 {
+#maindiv a.v1 {
     box-shadow: 1px 1px 3px #525252;
 	background-color:#62e000;    
 }
 
-a.v2 {
+#maindiv a.v2 {
     box-shadow: 1px 1px 3px #525252;
 	background-color:#55c200;
 } 
 
-a.v3 {
+#maindiv a.v3 {
     box-shadow: 1px 1px 3px #525252;
 	background-color:#469f00;
 }
 
-a.v4 {
+#maindiv a.v4 {
     box-shadow: 1px 1px 3px #525252;
 	background-color:#3a8500;
 }
 
-a.v5, a.v6, a.v7, a.v8, a.v9, a.v10, a.v11, a.v12
+#maindiv a.v5,#maindiv  a.v6,#maindiv  a.v7,
+#maindiv  a.v8,#maindiv  a.v9,#maindiv  a.v10,
+#maindiv  a.v11,#maindiv  a.v12
 {
     box-shadow: 1px 1px 3px #525252;
 	background-color:#368000;
 }
 
-#footer {
+#maindiv #footer {
     margin-top:10px;
     font-size:small;
     color:lightgrey;
 }
 
 
-#gameover {
+#maindiv #gameover {
     margin: 20px;
     font-weight: bold;
     font-size: 16pt;
 }
 
-#gameover.red {
+#maindiv #gameover.red {
     color:red;
 }
-#gameover.green {
+#maindiv #gameover.green {
     color:green;
 }
