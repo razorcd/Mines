@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div id="asd"> XXX </div>
+
+	<script>
+
+
+	el = document.getElementById("asd");
+
+	var func = function(e){
+		var theTarget = e.target ? e.target : e.srcElement;
+		if( theTarget && ( theTarget.nodeType == 3 || theTarget.nodeType == 4 ) ) {
+  			theTarget = theTarget.parentNode;
+		}
+		if( e.preventDefault ) { e.preventDefault(); }
+		e.returnValue = false;
+		if( e.stopPropagation ) { e.stopPropagation(); }
+		e.cancelBubble = true;
+
+		alert(theTarget.id);
+	}
+
+	clickEvent(el,func);
+	function clickEvent(el, func){
+		if (el.addEventListener) {
+			el.addEventListener("click",func,false);
+		}
+		else {
+			el.attachEvent("onclick", func);
+		}
+	}
+
+
+	</script>
+
+</body>
+</html>

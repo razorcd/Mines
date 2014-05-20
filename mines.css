@@ -72,41 +72,41 @@ body {
     background-color: #87b0e4;
 }
 
-a[name="bomb"] {
+a.bomb {
     box-shadow: 1px 1px 3px #525252;
 	background-color:red;
 	color:pink;
 	font-weight: bold;
 }
 
-a[name="0"] {
+a.v0 {
     box-shadow: 1px 1px 3px #525252;
 	background-color: #70ff00;
 	color:black;
 }
 
-a[name="1"] {
+a.v1 {
     box-shadow: 1px 1px 3px #525252;
 	background-color:#62e000;    
 }
 
-a[name="2"] {
+a.v2 {
     box-shadow: 1px 1px 3px #525252;
 	background-color:#55c200;
 } 
 
-a[name="3"] {
+a.v3 {
     box-shadow: 1px 1px 3px #525252;
 	background-color:#469f00;
 }
 
-a[name="4"] {
+a.v4 {
     box-shadow: 1px 1px 3px #525252;
 	background-color:#3a8500;
 }
 
-a[name="5"], a[name="6"], a[name="7"], a[name="8"],
-a[name="9"], a[name="10"], a[name="11"], a[name="12"] {
+a.v5, a.v6, a.v7, a.v8, a.v9, a.v10, a.v11, a.v12
+{
     box-shadow: 1px 1px 3px #525252;
 	background-color:#368000;
 }
@@ -115,4 +115,18 @@ a[name="9"], a[name="10"], a[name="11"], a[name="12"] {
     margin-top:10px;
     font-size:small;
     color:lightgrey;
+}
+
+
+#gameover {
+    margin: 20px;
+    font-weight: bold;
+    font-size: 16pt;
+}
+
+#gameover.red {
+    color:red;
+}
+#gameover.green {
+    color:green;
 }

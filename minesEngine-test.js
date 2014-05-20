@@ -105,4 +105,4 @@ mine1.drawMaze();
 
 
 
-mine1.startNewGame(10,4,15);
+mine1.startNewGame(10,8,35);
